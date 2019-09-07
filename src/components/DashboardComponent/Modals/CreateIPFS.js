@@ -1,30 +1,53 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
+import IPFS from 'ipfs-api';
 import upload from './upload.png';
 import document from './contract.png';
 
-// TODO: Create component for three rules and animate.
 class CreateIPFS extends React.Component {
 	constructor() {
 		super();
-
+	
 		this.state = {
 			uploadImage: upload,
-			uploadString: 'Upload a document'
+			uploadString: 'Upload a document',
+			added_file_hash: null
 		}
 
 		this.handleUpload = this.handleUpload.bind(this);
+		this.ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001,protocol: 'https' });
 	}
 	handleUpload(file) {
-		console.log(file);
-
 		// Change uploaded document string and image
-		const fileName = file[0].name;
+		const upload = file[0];
 		this.setState({
 			uploadImage: document,
-			uploadString: fileName
+			uploadString: upload.name
+		})
+
+		let reader = new window.FileReader()
+		reader.onloadend = () => this.ipfsSubmit(reader);
+		reader.readAsArrayBuffer(upload);
+	}
+
+	ipfsSubmit = async (reader) => {
+		let ipfsId;
+		const buffer = await Buffer.from(reader.result)
+		await this.ipfs.add(buffer)
+		.then((response) => {
+			console.log(response)
+			ipfsId = response[0].hash
+			console.log(ipfsId)
+			this.setState({added_file_hash: ipfsId})
+		}).catch((err) => {
+			console.error(err)
 		})
 	}
+
+	arrayBufferToString = (arrayBuffer) => {
+		return String.fromCharCode.apply(null, new Uint16Array(arrayBuffer));
+	}
+
 	render(props) {
 		return(
 			<div>
