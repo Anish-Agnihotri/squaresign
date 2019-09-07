@@ -3,11 +3,7 @@ import logo from './logo.svg';
 import { NavLink } from 'react-router-dom';
 import { HamburgerButton } from 'react-hamburger-button';
 import Modal from 'react-responsive-modal';
-import Squarelink from 'squarelink';
-import Web3 from 'web3';
 import './index.css';
-
-const sqlk = new Squarelink('666b713c33ce39658967', 'rinkeby', { scope: ['user:name'] });
 
 class Header extends React.Component {
 
@@ -51,7 +47,8 @@ class Header extends React.Component {
 			showMenu: false,
 			showMenuIcon: true,
 			isAuthenticated: false,
-			modalOpen: false
+			modalOpen: false,
+			userName: 'Dummy'
 		};
 		
 		this.showMenu = this.showMenu.bind(this);
@@ -85,17 +82,13 @@ class Header extends React.Component {
 
 	/* Authentication */
 	authenticate() {
-		sqlk.getProvider((provider) => {
-			window.web3 = new Web3(provider)
-
-			window.web3.eth.getAccounts().then((response) => {
-				console.log(response);
-
-				this.setState({
-					isAuthenticated: true
-				})
-				this.closeModal();
-			});
+		this.props.web3.eth.getAccounts().then(() => {
+			const userName = this.props.sqlk.getName();
+			this.setState({
+				isAuthenticated: true,
+				userName: userName
+			})
+			this.closeModal();
 		});
 	}
 
