@@ -25,8 +25,8 @@ class App extends React.Component {
             <Header web3={provider} sqlk={sqlk} />
 
             <Route path="/" exact component={Home} />
-            <Route path="/dashboard" component={Dashboard} web3={provider} sqlk={sqlk} />
-            <Route path="/invitations" component={Invitations} web3={provider} sqlk={sqlk}/>
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/invitations" component={Invitations} />
         </Router>
       </div>
     );

@@ -1,0 +1,194 @@
+.dashboard-comp {
+	padding-top: 20px;
+}
+
+.document {
+	width: 250px;
+	height: 320px;
+	display: inline-block;
+	margin: 10px;
+	border-radius: 10px;
+	text-decoration: none;
+	transition: 0.15s ease-in-out;
+}
+
+.create {
+	background-color: rgb(248, 248, 248);
+	border: 2px dashed rgb(179, 179, 179);
+	text-align: center;
+	cursor: pointer;
+}
+
+.create:hover {
+	border-color: #000;
+}
+
+.create > h2 {
+	color: rgb(179, 179, 179);
+	font-size: 26px;
+	line-height: 268px;
+	transition: 0.15s ease-in-out;
+}
+
+.create:hover > h2 {
+	color: #000;
+}
+
+.dashboardOverlay {
+	background-color: rgba(0, 0, 0, 0.45);
+}
+
+.dashboardModal {
+	height: 600px;
+	width: 100%;
+	border-radius: 20px;
+	padding: 0px;
+}
+
+.dashboardModal > div {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.dashboardModal > div > div {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+}
+
+/* Global modal setup */
+.dashboardModal > div > div > div:first-child {
+	display: inline-block;
+	width: 100%;
+	height: calc(100% - 100px);
+	background-color: #2b71ff;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.dashboardModal > div > div > div:nth-child(2) {
+	display: inline-block;
+	width: 100%;
+	height: 100px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+.dashboardModal > div > div > div:first-child > h1 {
+	color: #fff;
+	font-weight: 600;
+	font-size: 36px;
+}
+
+.dashboardModal > div > div > div:first-child > p {
+	letter-spacing: 0.5;
+	font-size: 17px;
+	margin-top: -20px;
+	color: rgba(255, 255, 255, 0.4)
+}
+
+.dashboardModal > div > div > div:first-child > div {
+	width: 80%;
+	max-width: 800px;
+	height: 65px;
+	background-color: #679aff;
+	display: inline-block;
+	border-radius: 10px;
+	margin: 5px 0px 5px 0px;
+	text-align: left;
+	color: #fff;
+}
+
+.dashboardModal > div > div > div:first-child > div > img {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	margin: 7.5px 0px 0px 7.5px;
+}
+
+.dashboardModal > div > div > div:first-child > div > div {
+	height: 65px;
+	display: inline-block;
+	padding-left: 20px;
+	transform: translateY(-10%);
+}
+
+.dashboardModal > div > div > div:first-child > div > div > h1 {
+	font-size: 24px;
+	line-height: 10px;
+}
+
+.dashboardModal > div > div > div:first-child > div > div > p {
+	line-height: 0px;
+	font-size: 14px;
+	color: rgb(236, 236, 236);
+}
+
+.dashboardModal > div > div > div:first-child > section {
+	height: 350px;
+	width: 90%;
+	margin-left: 5%;
+	border-radius: 10px;
+	border: 2px dashed #ccc;
+	transition: 0.15s ease-in-out;
+	cursor: pointer;
+	color: #fff;
+}
+
+.dashboardModal > div > div > div:first-child > section > div > img {
+	height: 64px;
+	width: 64px;
+	margin-top: 130px;
+}
+
+.dashboardModal > div > div > div:first-child > section > div > h2 {
+	font-size: 20px;
+	line-height: 0px;
+}
+
+.dashboardModal > div > div > div:first-child > section:hover {
+	background-color: #4683fd;
+}
+
+.dashboardModal > div > div > div:first-child > section > div {
+	display: inline-block;
+	height: 350px;
+	width: 100%;
+}
+
+.dashboardModal > div > div > div:nth-child(2) > button {
+	text-decoration: none;
+	width: calc(50% - 30px);
+	padding: 15px 0px 15px 0px;
+	font-weight: 500;
+	border-radius: 40px;
+	transition: 0.15s ease-in-out;
+	font-size: 16px;
+	margin: 25px 7.5px 0px 7.5px;
+	cursor: pointer;
+	border: 1.5px solid transparent;
+}
+
+.dashboardModal > div > div > div:nth-child(2) > button:first-child {
+	border-color: rgb(179, 179, 179);
+	color: rgb(179, 179, 179);
+}
+.dashboardModal > div > div > div:nth-child(2) > button:first-child:hover {
+	border-color: #000;
+	color: #000;
+}
+.dashboardModal > div > div > div:nth-child(2) > button:last-child {
+	background-color: #2b71ff;
+	color: #fff;
+}
+.dashboardModal > div > div > div:nth-child(2) > button:last-child:hover {
+	background-color: #4BC68B;
+}
+
+.started {
+	border-color: transparent !important;
+	width: 90% !important;
+	color: #fff !important;
+}
