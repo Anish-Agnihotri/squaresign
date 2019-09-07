@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import IPFS from 'ipfs-api';
 import upload from './upload.png';
 import document from './contract.png';
+import '../../../../node_modules/font-awesome/css/font-awesome.min.css';
 
 class CreateIPFS extends React.Component {
 	constructor() {
@@ -11,18 +12,23 @@ class CreateIPFS extends React.Component {
 		this.state = {
 			uploadImage: upload,
 			uploadString: 'Upload a document',
-			added_file_hash: null
+			added_file_hash: null,
+			isLoading: false,
+			isUploaded: false
 		}
 
 		this.handleUpload = this.handleUpload.bind(this);
+		this.checkButton = this.checkButton.bind(this);
 		this.ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001,protocol: 'https' });
 	}
+
 	handleUpload(file) {
 		// Change uploaded document string and image
 		const upload = file[0];
 		this.setState({
 			uploadImage: document,
-			uploadString: upload.name
+			uploadString: upload.name,
+			isLoading: true
 		})
 
 		let reader = new window.FileReader()
@@ -32,20 +38,27 @@ class CreateIPFS extends React.Component {
 
 	ipfsSubmit = async (reader) => {
 		let ipfsId;
-		const buffer = await Buffer.from(reader.result)
+		const buffer = await Buffer.from(reader.result);
 		await this.ipfs.add(buffer)
 		.then((response) => {
-			console.log(response)
-			ipfsId = response[0].hash
-			console.log(ipfsId)
-			this.setState({added_file_hash: ipfsId})
+			ipfsId = response[0].hash;
+			this.setState({added_file_hash: ipfsId, isLoading: false, isUploaded: true});
+			console.log(this.state.added_file_hash); // for testing purposes
 		}).catch((err) => {
-			console.error(err)
+			console.error(err);
 		})
 	}
 
 	arrayBufferToString = (arrayBuffer) => {
 		return String.fromCharCode.apply(null, new Uint16Array(arrayBuffer));
+	}
+
+	checkButton() {
+		if (this.state.isUploaded) {
+			return <button onClick={this.props.tabForward}>Next Step</button>;
+		} else {
+			return <button onClick={this.props.tabForward} style={disabledButton} disabled>No File Uploaded</button>;
+		}
 	}
 
 	render(props) {
@@ -68,11 +81,23 @@ class CreateIPFS extends React.Component {
 				</div>
 				<div>
 					<button onClick={this.props.tabBackward}>Back</button>
-					<button onClick={this.props.tabForward}>Next Step</button>
+					{ this.state.isLoading 
+						? (
+							<button onClick={this.props.tabForward} style={disabledButton} disabled><i className="fa fa-spinner fa-spin"></i></button>
+						)
+						: (
+							this.checkButton()
+						)
+					}
 				</div>
 			</div>
 		);
 	}
 }
+
+var disabledButton = {
+	backgroundColor: 'rgb(179, 179, 179)',
+	pointer: 'default'
+};
 
 export default CreateIPFS;
