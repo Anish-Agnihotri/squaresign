@@ -11,7 +11,7 @@ class Pageheader extends React.Component {
 					{
 						this.props.parentLink !== undefined
 							? (
-								<Link to={ this.props.parentLink }>{ this.props.parentLinkName }</Link>
+								<p><Link to={ this.props.parentLink }>{ this.props.parentLinkName }</Link> / <Link to={ this.props.childLink }>{ this.props.childLinkName }</Link></p>
 							)
 							: (
 								null

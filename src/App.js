@@ -7,7 +7,7 @@ import Header from './components/Header';
 // page setup
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
-import Invitations from './pages/Invitations';
+import View from './pages/View';
 
 // web3
 import Squarelink from 'squarelink';
@@ -26,7 +26,7 @@ class App extends React.Component {
 
             <Route path="/" exact component={Home} />
             <Route path="/dashboard" component={Dashboard} />
-            <Route path="/invitations" component={Invitations} />
+            <Route path="/view/:passthrough/:hash" component={View} />
         </Router>
       </div>
     );

@@ -153,6 +153,8 @@
 	box-shadow: 0 4px 8px rgba(0,0,0,.12);
 }
 
+.loginButton:focus {outline:0;}
+
 .profile {
 	height: 30px;
 	background-color: #2b71ff;
@@ -222,6 +224,8 @@
 .authModal > div > div > div:nth-child(2) > button:hover {
 	background-color: rgba(195, 195, 195, 0.20);
 }
+
+.authModal > div > div > div:nth-child(2) > button:focus {outline:0;}
 
 .authModal > div > div > div:nth-child(2) > button > div > img {
 	height: 50px;

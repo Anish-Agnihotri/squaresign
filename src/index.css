@@ -24,3 +24,6 @@ body {
     padding: 0px 10px 0px 10px;
   }
 }
+
+/* Fix weird blue button outline, TODO: find alternative for accessibility */
+button:focus {outline:0;}

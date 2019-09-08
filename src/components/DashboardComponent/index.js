@@ -23,6 +23,7 @@ class Error extends React.Component {
 		this.tabForward = this.tabForward.bind(this);
 		this.tabBackward = this.tabBackward.bind(this);
 		this.renderTab = this.renderTab.bind(this);
+		this.returnAddressTab = this.returnAddressTab.bind(this);
 	}
 
 	/* Modal setup */
@@ -37,8 +38,17 @@ class Error extends React.Component {
 	tabForward() {
 		this.setState({ modalTab: this.state.modalTab + 1});
 	}
+
 	tabBackward() {
 		this.setState({ modalTab: this.state.modalTab - 1 });
+	}
+
+	returnAddressTab(value) {
+		const returnedValue = value;
+		this.setState({
+			hash: returnedValue
+		})
+		this.tabForward();
 	}
 
 	renderTab() {
@@ -46,10 +56,10 @@ class Error extends React.Component {
 			return <Introduction tabForward={this.tabForward}/>;
 		}
 		else if (this.state.modalTab === 1) {
-			return <CreateIPFS tabBackward={this.tabBackward} tabForward={this.tabForward}/>;
+			return <CreateIPFS tabBackward={this.tabBackward} tabForward={this.returnAddressTab} />;
 		}
 		else if (this.state.modalTab === 2) {
-			return <CreateLink tabBackward={this.tabBackward} tabForward={this.closeModal}/>;
+			return <CreateLink tabBackward={this.tabBackward} tabForward={this.closeModal} hash={this.state.hash}/>;
 		}
 	}
 

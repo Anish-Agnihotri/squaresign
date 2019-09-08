@@ -109,14 +109,12 @@ class Header extends React.Component {
 									? (
 										<ul>
 											<li><NavLink to="/dashboard" activeClassName="activeLink">Dashboard</NavLink></li>
-											<li><NavLink to="/invitations" activeClassName="activeLink">Invitations</NavLink></li>
 											<li><div className="profile">{this.state.userName}</div></li>
 										</ul>
 									)
 									: (
 										<ul>
 											<li><NavLink to="/dashboard" activeClassName="activeLink">Dashboard</NavLink></li>
-											<li><NavLink to="/invitations" activeClassName="activeLink">Invitations</NavLink></li>
 											<li><button onClick={this.openModal} className="loginButton">Get Started</button></li>
 										</ul>
 									)

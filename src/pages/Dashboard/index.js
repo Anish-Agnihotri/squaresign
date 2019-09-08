@@ -1,7 +1,6 @@
 import React from 'react';
 import Pageheader from '../../components/Pageheader';
 import DashboardComponent from '../../components/DashboardComponent';
-import './index.css';
 
 // web3
 import Squarelink from 'squarelink';

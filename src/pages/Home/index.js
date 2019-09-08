@@ -6,7 +6,7 @@ class Home extends React.Component {
 		return (
 			<div className="home">
 				<div className="spacer">
-					<p>Something</p>
+					<p>Todo: Add landing page.</p>
 				</div>
 			</div>
 		);
