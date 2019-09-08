@@ -1,5 +1,6 @@
 import React from 'react';
 import Pageheader from '../../components/Pageheader';
+import Error from '../../components/Error';
 import './index.css';
 
 // web3
@@ -126,99 +127,107 @@ class View extends React.Component {
 	}
 	viewDocument() {
 		this.setState({
-			loading: true
+			loading: true,
 		})
 
 		// Default account
-		web3.eth.getAccounts().then((response) => {
+		this.SquareSign.methods.signDocument(this.state.hash).send({from: this.props.addr}).then(() => {
 			this.setState({
-				defaultAccount: response[0]
+				hasSigned: true,
+				loading: false
 			})
-			this.SquareSign.methods.signDocument(this.state.hash).send({from: this.state.defaultAccount}).then(() => {
+			const array = [];
+			this.SquareSign.methods.getSignatures(this.state.hash).call().then((signatures) => { 
+				signatures.forEach(function(sig) {
+					array.push(sig);
+				})
+				const uniqueArray = Array.from(new Set(array));
 				this.setState({
-					hasSigned: true,
-					loading: false
+					uniqueAddresses: uniqueArray,
+					uniqueLength: uniqueArray.length
 				})
-				const array = [];
-				this.SquareSign.methods.getSignatures(this.state.hash).call().then((signatures) => { 
-					signatures.forEach(function(sig) {
-						array.push(sig);
-					})
-					const uniqueArray = Array.from(new Set(array));
-					this.setState({
-						uniqueAddresses: uniqueArray,
-						uniqueLength: uniqueArray.length
-					})
-				})
-			});
+			})
 		});
 	}
-	// FIXME: this whole dapp is some of the worst code, fix before pushing to git
+
 	showUsers() {
-		for (const i in this.state.uniqueLength) {
-			return <li className="addressItem"><a href={`https://rinkeby.etherscan.io/address/${this.state.uniqueAddresses[i]}`} target="_blank" rel="noopener noreferrer">{this.state.uniqueAddresses[i]}</a></li>;
+		let appendArray = [];
+		for (let i = 0; i < this.state.uniqueLength; i++) {
+			appendArray.push(<li className="addressItem" key={i}><a href={`https://rinkeby.etherscan.io/address/${this.state.uniqueAddresses[i]}`} target="_blank" rel="noopener noreferrer">{this.state.uniqueAddresses[i]}</a></li>)
 		}
+		console.log(appendArray);
+		return appendArray;
 	}
 	componentDidMount() {
+		const location = window.location.pathname.slice(6);
 		this.setState({
-			passthrough: this.props.match.params.passthrough,
-			hash: this.props.match.params.hash
-		});
+			passthrough: new Buffer(location.split('/')[0], 'base64').toString('utf-8'),
+			hash: new Buffer(location.split("/").pop(), 'base64').toString('utf-8')
+		})
 	}
 	render () {
 		return (
 			<div className="home">
 				<Pageheader name="View Document" text={this.state.subheader}/>
-				{
-					!this.state.hasSigned
+				{ this.props.addr === null
 					? (
-						<div className="spacer center">
-							<div className="toBeSigned">
-								<div>
-									<h1>Sign Document</h1>
-									<p>You must sign with your identity (twice) before you can see the document. <br />This is binding and final on the blockchain.</p>
-									{
-										this.state.loading
-										? (
-											<button className="signDocument" onClick={this.viewDocument} style={disabledButton} disabled>
-												<div>
-													<i className="fa fa-spinner fa-spin"></i>
-												</div>
-											</button>
-										)
-										: (
-											<button className="signDocument" onClick={this.viewDocument}>
-												<div>
-													<img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjMgMjMuMDUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTAgMGgxOGE1IDUgMCAwIDEgNSA1djEzLjA1YTUgNSAwIDAgMSAtNSA1aC0xM2E1IDUgMCAwIDEgLTUtNXptMy4yNCAyLjl2MTUuMjNhMiAyIDAgMCAwIDIgMmgxMi41NGEyIDIgMCAwIDAgMi0ydi0xMy4yM2EyIDIgMCAwIDAgLTItMnptMy41IDBoMy4yNnYxMS42M2EyIDIgMCAwIDEgLTIgMmgtNC43NnYtMi44MWgzLjV6bTkuNSAxNy4yM2gtMy4xOHYtMTEuNjNhMiAyIDAgMCAxIDItMmg0LjcydjIuODFoLTMuNXoiIGZpbGw9IiMzOTY0ZGYiLz48L3N2Zz4=" alt="SquareLink"/>
-													<h1>SquareLink</h1>
-												</div>
-											</button>
-										)
-									}
-								</div>
-							</div>
-						</div>
+						<Error />
 					)
 					: (
-						<div className="the-section">
-							<div className="left-section">
-								<h1>Retrieved Document</h1>
-								<iframe src={`http://ipfs.io/ipfs/${this.state.passthrough}`} title="frame"/>
-							</div>
-							<div className="right-section">
-								<h1>Other signees</h1>
-								<p>The following users have also signed this document:</p>
-								<div>
-									<ul>
-										{ this.showUsers() }
-									</ul>
-								</div>
-							</div>
+						<div>
+							{
+								!this.state.hasSigned
+								? (
+									<div className="spacer center">
+										<div className="toBeSigned">
+											<div>
+												<h1>Record Access</h1>
+												<p>We track every user who has had access to a document (similar to a NDA).<br />This is binding and final on the blockchain, so please review now.</p>
+												{
+													this.state.loading
+													? (
+														<button className="signDocument" onClick={this.viewDocument} style={disabledButton} disabled>
+															<div>
+																<i className="fa fa-spinner fa-spin"></i>
+															</div>
+														</button>
+													)
+													: (
+														<button className="signDocument" onClick={this.viewDocument}>
+															<div>
+																<img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjMgMjMuMDUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTAgMGgxOGE1IDUgMCAwIDEgNSA1djEzLjA1YTUgNSAwIDAgMSAtNSA1aC0xM2E1IDUgMCAwIDEgLTUtNXptMy4yNCAyLjl2MTUuMjNhMiAyIDAgMCAwIDIgMmgxMi41NGEyIDIgMCAwIDAgMi0ydi0xMy4yM2EyIDIgMCAwIDAgLTItMnptMy41IDBoMy4yNnYxMS42M2EyIDIgMCAwIDEgLTIgMmgtNC43NnYtMi44MWgzLjV6bTkuNSAxNy4yM2gtMy4xOHYtMTEuNjNhMiAyIDAgMCAxIDItMmg0LjcydjIuODFoLTMuNXoiIGZpbGw9IiMzOTY0ZGYiLz48L3N2Zz4=" alt="SquareLink"/>
+																<h1>Squarelink</h1>
+															</div>
+														</button>
+													)
+												}
+											</div>
+										</div>
+									</div>
+								)
+								: (
+									<div className="the-section">
+										<div className="left-section">
+											<h1>Retrieved Document</h1>
+											<iframe src={`http://ipfs.io/ipfs/${this.state.passthrough}`} title="frame"/>
+										</div>
+										<div className="right-section">
+											<h1>Other signees</h1>
+											<p>The following addresses have cryptographically signed this document:</p>
+											<div>
+												<ul>
+													{this.showUsers()}
+												</ul>
+											</div>
+										</div>
+									</div>
+								)
+							}
 						</div>
 					)
-				}
-			</div>
-		);
+						}
+				</div>
+		)
 	}
 }
 

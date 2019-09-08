@@ -1,5 +1,6 @@
 import React from 'react';
 import Pageheader from '../../components/Pageheader';
+import Error from '../../components/Error';
 import DashboardComponent from '../../components/DashboardComponent';
 
 // web3
@@ -13,8 +14,21 @@ class Dashboard extends React.Component {
 	render () {
 		return (
 			<div className="home">
-				<Pageheader name="Dashboard" text="Create new documents or track recent signatures."/>
-				<DashboardComponent web3={web3} sqlk={sqlk}/>
+				{
+					this.props.addr === null
+					? (
+						<div>
+							<Pageheader name="Dashboard" text="Create new documents or track recent signatures."/>
+							<Error />
+						</div>
+					)
+					: (
+						<div>
+							<Pageheader name="Dashboard" text="Create new documents or track recent signatures."/>
+							<DashboardComponent web3={web3} sqlk={sqlk} addr={this.props.addr}/>
+						</div>
+					)
+				}
 			</div>
 		);
 	}

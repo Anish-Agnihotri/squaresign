@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^6.6.0",
     "font-awesome": "^4.7.0",
     "ipfs-api": "^26.1.2",
+    "mailgun.js": "^2.0.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-dropzone": "^10.1.8",

@@ -10,6 +10,87 @@
 	border-radius: 10px;
 	text-decoration: none;
 	transition: 0.15s ease-in-out;
+	vertical-align: middle
+}
+
+.documentDiv {
+	border: 2px solid #000;
+	text-align: center;
+}
+
+.documentDiv > div:first-child {
+	height: 268px;
+	width: 100%;
+	display: inline-block;
+	background-color: #2b71ff;
+	background-image: url('./background.png');
+	background-position: center;
+	background-repeat: no-repeat; 
+	background-size: cover;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+}
+
+.documentDiv > div:first-child > img {
+	width: 100px;
+	margin-left: 25px;
+	margin-top: 60px;	
+}
+
+.documentDiv > div:first-child > p {
+	color: #fff;
+	width: 90%;
+	display: inline-block;
+	min-height: 50px;
+}
+
+.documentDiv > div:last-child {
+	height: 120px;
+	width: 100%;
+	display: inline-block;
+}
+
+.documentDiv > div:last-child > input {
+	height: 45px;
+	width: calc(90% - 10px);
+	margin: 2.5px 2.5% 2.5px 2%;
+	border-radius: 10px;
+	border: 1px solid #000;
+	font-size: 16px;
+	padding: 0px 7.5px 0px 2.5px;
+}
+
+.documentDiv > div:last-child > button {
+	height: 52.5px;
+	display: inline-block;
+	width: 100%;
+	font-size: 16px;
+	font-weight: 500;
+	border: 2px solid transparent;
+}
+
+.statButton {
+	border-top: 1px solid #000;
+}
+
+.documentDiv > div:last-child > button:last-child {
+	background-color: #2b71ff;
+	color: #fff;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	transition: 0.15s ease-in-out;
+}
+
+.documentDiv > div:last-child > button:last-child:hover {
+	background-color: #4BC68B;
+}
+
+.documentDiv > div:last-child > input {
+	width: 1px;
+	height: 1px;
+	position: absolute;
+	background-color: transparent;
+	border: none;
 }
 
 .create {
@@ -23,11 +104,16 @@
 	border-color: #000;
 }
 
+
 .create > h2 {
 	color: rgb(179, 179, 179);
 	font-size: 26px;
 	line-height: 268px;
 	transition: 0.15s ease-in-out;
+}
+
+@keyframes dash {
+	to { stroke-dashoffset: -5; }
 }
 
 .create:hover > h2 {
@@ -195,12 +281,12 @@
 }
 
 .dashboardModal > div > div > div:first-child > span > input {
-	width: 100%;
+	width: calc(100% - 15px);
 	height: 50px;
 	border: none;
 	border-radius: 10px;
 	font-size: 20px;
-	padding: 0px 2px 0px 2px;
+	padding: 0px 7.5px 0px 7.5px;
 }
 
 .dashboardModal > div > div > div:first-child > span > button {

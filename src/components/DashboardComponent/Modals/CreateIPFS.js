@@ -132,13 +132,6 @@ class CreateIPFS extends React.Component {
 		this.checkButton = this.checkButton.bind(this);
 		this.submitTransaction = this.submitTransaction.bind(this);
 		this.ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001,protocol: 'https' });
-
-		// Default account
-		web3.eth.getAccounts().then((response) => {
-			this.setState({
-				defaultAccount: response[0]
-			})
-		});
 	}
 
 	handleUpload(file) {
@@ -185,8 +178,9 @@ class CreateIPFS extends React.Component {
 		});
 		this.checkButton();
 	
-		this.SquareSign.methods.addDocument(passthrough, hex).send({from: this.state.defaultAccount}).then(() => {
-			this.props.tabForward(`${this.state.added_file_hash}/${passthrough}`);
+		this.SquareSign.methods.addDocument(passthrough, hex).send({from: this.props.addr}).then(() => {
+			const string = `${new Buffer(this.state.added_file_hash).toString('base64')}/${new Buffer(passthrough).toString('base64')}`;
+			this.props.tabForward(string);
 		});
 	}
 

@@ -1,8 +1,49 @@
-.alert-danger {
-	background-color: #fbfbfb;
+.alert-error {
+	width: 90%;
 	display: inline-block;
-	padding: 5px 0px 20px 0px;
+	min-height: calc(100vh - 284px);
+	margin-top: 25px;
+	background-color: #2b71ff;
 	border-radius: 10px;
-	width: 300px;
-	margin-left: calc(100vh - 300px);
+	color: #fff;
+}
+
+.alert-error > div {
+	display: inline-block;
+	padding-top: calc((100vh - 284px) - 350px);
+}
+
+.alert-error> div > h1 {
+	font-size: 36px;
+	font-weight: 600;
+	line-height: 10px;
+}
+
+.alert-error > div > p {
+	color: rgb(255, 255, 255, 0.6);
+	line-height: 22px;
+	margin-block-start: -5px;
+}
+
+.alert-error > div > img {
+	border: 5px solid #fff;
+	border-radius: 25px;
+	height: 150px;
+}
+
+.signDocument {
+	border: none;
+	width: 380px;
+	height: 100px;
+	margin: 10px 0px 0px 10px;
+	border-radius: 20px;
+	text-align: center;
+	background-color: #fff;
+	transition: 0.15s ease-in-out;
+	cursor: pointer;
+	opacity: 1.0
+}
+
+.signDocument:hover {
+	transform: scale(1.03);
 }

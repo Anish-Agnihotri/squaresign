@@ -118,6 +118,7 @@
 	width: calc(100% - 30px);
 	transition: 0.15s ease-in-out;
 	word-wrap: break-word;
+	margin: 5px 0px 5px 0px;
 }
 .addressItem > a:hover {
 	background-color: #fff;

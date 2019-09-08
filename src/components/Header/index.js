@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './logo.png';
 import { NavLink } from 'react-router-dom';
 import { HamburgerButton } from 'react-hamburger-button';
 import Modal from 'react-responsive-modal';
@@ -82,13 +82,14 @@ class Header extends React.Component {
 
 	/* Authentication */
 	authenticate() {
-		this.props.web3.eth.getAccounts().then(() => {
+		this.props.web3.eth.getAccounts().then((response) => {
 			const userName = this.props.sqlk.getName();
 			this.setState({
 				isAuthenticated: true,
 				userName: userName
 			})
 			this.closeModal();
+			this.props.changeAddress(response[0]);
 		});
 	}
 
@@ -97,7 +98,7 @@ class Header extends React.Component {
 			<div>
 				<div className="header">
 					<div className="subheader">
-						<span>Effortless eSignatures via <a href='https://squarelink.com' rel='noopener noreferrer' target='_blank'>SquareLink</a>.</span>
+						<span>Effortless eSignatures via <a href='https://squarelink.com' rel='noopener noreferrer' target='_blank'>Squarelink</a>.</span>
 					</div>
 					<div className="mainheader">
 						<div>
@@ -115,7 +116,7 @@ class Header extends React.Component {
 									: (
 										<ul>
 											<li><NavLink to="/dashboard" activeClassName="activeLink">Dashboard</NavLink></li>
-											<li><button onClick={this.openModal} className="loginButton">Get Started</button></li>
+											<li><button onClick={this.openModal} className="loginButton">Login</button></li>
 										</ul>
 									)
 								}
@@ -152,7 +153,7 @@ class Header extends React.Component {
 												<ul>
 													<li><NavLink to="/dashboard" activeClassName="activeLink">Dashboard</NavLink></li>
 													<li><NavLink to="/invitations" activeClassName="activeLink">Invitations</NavLink></li>
-													<li><button onClick={this.openModal} className="loginButton">Get Started</button></li>
+													<li><button onClick={this.openModal} className="loginButton">Login</button></li>
 												</ul>
 											)
 										}
@@ -178,13 +179,13 @@ class Header extends React.Component {
 						<div>
 							<div>
 								<h1>Login</h1>
-								<p>Easy login w/ SquareLink credentials.</p>
+								<p>Easy login w/ Squarelink.</p>
 							</div>
 							<div>
 								<button onClick={this.authenticate}>
 									<div>
 										<img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjMgMjMuMDUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTAgMGgxOGE1IDUgMCAwIDEgNSA1djEzLjA1YTUgNSAwIDAgMSAtNSA1aC0xM2E1IDUgMCAwIDEgLTUtNXptMy4yNCAyLjl2MTUuMjNhMiAyIDAgMCAwIDIgMmgxMi41NGEyIDIgMCAwIDAgMi0ydi0xMy4yM2EyIDIgMCAwIDAgLTItMnptMy41IDBoMy4yNnYxMS42M2EyIDIgMCAwIDEgLTIgMmgtNC43NnYtMi44MWgzLjV6bTkuNSAxNy4yM2gtMy4xOHYtMTEuNjNhMiAyIDAgMCAxIDItMmg0LjcydjIuODFoLTMuNXoiIGZpbGw9IiMzOTY0ZGYiLz48L3N2Zz4=" alt="SquareLink"/>
-										<h1>SquareLink</h1>
+										<h1>Squarelink</h1>
 									</div>
 								</button>
 							</div>
