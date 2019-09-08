@@ -1,4 +1,109 @@
-.home {
+.svg {
+	position: absolute;
+}
+
+.firstSvg {
+	top: 150px;
+	left: 0px;
+}
+
+.secondSvg {
+	top: calc(80% - 350px);
+	right: 0px;
+}
+
+.home-cta {
+	text-align: center;
+	height: calc(100vh - 143px);
+	display: table-cell;
+	vertical-align: middle;
+	width: 100vw;
+}
+
+.home-cta > div {
 	display: inline-block;
-	width: 100%;
+	background-color: #fff;
+}
+
+.home-cta > div > img {
+	height: 100px;
+}
+
+.home-cta > div > h1 {
+	font-size: 65px;
+	line-height: 35px;
+}
+
+.home-cta > div > h1:first-child {
+	font-weight: 700;
+}
+
+.home-cta > div > h1:last-child {
+	font-weight: 400;
+}
+
+.home-cta > div > p {
+	font-size: 20px;
+	font-weight: 300;
+	max-width: 800px;
+	line-height: 30px;
+	display: inline-block;
+}
+
+.home-cta > div > div {
+	margin-top: 30px;
+}
+
+.home-cta > div > div > a {
+	padding: 10px 40px 10px 40px;
+	margin: 0px 15px 0px 15px;
+	border-radius: 40px;
+	transition: 0.15s ease-in-out;
+	text-decoration: none;
+	font-weight: 500;
+	border: 2px solid transparent;
+}
+
+.home-cta > div > div > a:first-child {
+	background-color: #2b71ff;
+	color: #fff;
+}
+
+.home-cta > div > div > a:first-child:hover {
+	background-color: #4986ff;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 800px) {
+	.home-cta > div > h1 {
+		font-size: 50px;
+		line-height: 50px;
+	}
+}
+
+/* SVGS */
+@media screen and (max-width: 1200px) {
+	.svg > svg {
+		width: 175px;
+		height: 300px;
+	}
+	.secondSvg {
+		top: calc(80% - 150px);
+	}
+}
+
+@media screen and (max-width: 1080px) {
+	.svg > svg {
+		width: 120px;
+		height: 200px;
+	}
+	.secondSvg {
+		top: 75%;
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	.svg {
+		display: none;
+	}
 }
