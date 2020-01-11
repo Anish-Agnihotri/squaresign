@@ -10,7 +10,7 @@
 	border-radius: 10px;
 	text-decoration: none;
 	transition: 0.15s ease-in-out;
-	vertical-align: middle
+	vertical-align: middle;
 }
 
 .documentDiv {
@@ -94,16 +94,21 @@
 }
 
 .create {
-	background-color: rgb(248, 248, 248);
-	border: 2px dashed rgb(179, 179, 179);
+	height: 320px;
+	width: 250px;
+	background: linear-gradient(90deg, #ccc 50%, transparent 50%), linear-gradient(90deg, #ccc 50%, transparent 50%), linear-gradient(0deg, #ccc 50%, transparent 50%), linear-gradient(0deg, #ccc 50%, transparent 50%);
 	text-align: center;
 	cursor: pointer;
+	background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+	background-size: 16px 4px, 16px 4px, 4px 16px, 4px 16px;
+	background-position: 492px 0px, 0px 313px, 0px 0px, 243.4px 266px;
+	transition: background-position 5s;
+	border: none;
 }
 
 .create:hover {
-	border-color: #000;
+	background-position: 332px 0px, 200px 313px, 0px 200px, 243.4px 0px;
 }
-
 
 .create > h2 {
 	color: rgb(179, 179, 179);
