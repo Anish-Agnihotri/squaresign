@@ -1,68 +1,66 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<center><img src="https://i.imgur.com/FPloLit.png" width="250"/>
 
-## Available Scripts
+| Hosted Demo | Milestone Description |
+|-------------|-----------------------|
+| <p align="center">[Press Me](https://squaresign.anishagnihotri.now.sh/)</p> | <p align="center">[Devpost](https://devpost.com/software/squaresign)</p>| 
+</center>
 
-In the project directory, you can run:
+SquareSign was a project built at [ETHBoston @Harvard University](https://devpost.com/software/squaresign) solo, in 36-hours. In general, it's a rough waiver-signing/notarization platform that builds upon my past experiences (working with the OpenSign Ethereum smart contract libraries).
 
-### `npm start`
+SquareSign is written completely in React, with no back-end services, or even, state management. Choosing to have some fun—not using Redux—the project uses a header master-component hiearchy.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Squarelink was used for web3 support + connecting to the Ethereum blockchain because: (1) they were the awesome sponsors, and (2) I wanted the application to be as simple as possible to use for non-blockchain-folk. Thus, you can just pop in and email/password and let SquareSign handle the rest.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+<p align="center">
+<img src="https://i.imgur.com/iZu3Glo.png" />
+<p align="center" style="font-size: 12px">Landing page</p>
 
-### `npm test`
+<img src="https://i.imgur.com/RODAq6g.png" />
+<p align="center" style="font-size: 12px">Document upload flow</p>
+</p>
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Running SquareSign
+If you want to spin up SquareSign, it's as simple as can be.
 
-### `npm run build`
+1. Run `git clone https://github.com/anish-agnihotri/squaresign.git`
+2. Change directory via `cd squaresign/`
+3. Run `yarn`
+4. Run `yarn build`
+5. Run `yarn start`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Architecture
+Squaresign relies heavily on [React](https://github.com/facebook/react), [IPFS](https://github.com/ipfs/js-ipfs-http-client), and my favourite modal plugin [React-Responsive-Modal](https://www.npmjs.com/package/react-responsive-modal). Once documents are uploaded, they are hashed and stored directly upon IPFS (and hashed via the smart contract so that signatories can be tracked).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### Contract architecture:
+```solidity
+pragma solidity ^0.4.17;
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+contract Squaresign{
+    struct Document {
+        uint timestamp;
+        bytes ipfs_hash;
+        address[] signatures;
+    }
+    mapping(address => bytes[]) public users; //maps addresses to agreement id
+    mapping(bytes32 => Document) public documents; //maps keccak256(agreement_id) hashes to documents
 
-### `npm run eject`
+    function addDocument(bytes id, bytes ipfs) public {
+        users[msg.sender].push(ipfs); //Add document to users's "signed" list
+        address[] memory sender = new address[](1);
+        sender[0] = msg.sender;
+        documents[keccak256(id)] = Document(block.timestamp, ipfs, sender);
+    }
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    function signDocument(bytes id) public {
+        users[msg.sender].push(id);
+        documents[keccak256(id)].signatures.push(msg.sender);
+    }
+    
+    function getSignatures(bytes id) public view returns (address[]) {
+        return documents[keccak256(id)].signatures;
+    }
+}
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## License
+Squaresign is licensed under [the MIT license](https://github.com/anish-agnihotri/squaresign/blob/master/LICENSE.md).
